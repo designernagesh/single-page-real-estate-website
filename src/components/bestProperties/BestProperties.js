@@ -5,10 +5,10 @@ import { useState } from 'react';
 
 const BestProperties = () => {
     const [images, setImages] = useState(data);
-    const [activeButton, setActiveButton] = useState(null);
+    const [activeButton, setActiveButton] = useState('all');
 
     let categories = new Set(data.map((cat) => cat.category));
-    let newCategories = ['all', ...categories];
+    let newCategories = [...categories];
 
     const filterHandler = (categoryName) => {
         setActiveButton(categoryName);
@@ -23,10 +23,16 @@ const BestProperties = () => {
         <div className='best-properties'>
             <h2>Find Best Rated Properties</h2>
             <div>
+                <button
+                    className={activeButton === 'all' ? 'active' : ''}
+                    onClick={() => filterHandler('all')}> All
+                </button>
                 {
                     newCategories.map((category, i) => {
                         return (
-                            <button className={activeButton === category ? 'active' : ''} key={i} onClick={() => filterHandler(category)}>{category}</button>
+                            <>
+                                <button className={activeButton === category ? 'active' : ''} key={i} onClick={() => filterHandler(category)}>{category}</button>
+                            </>
                         )
                     })
                 }
@@ -39,7 +45,6 @@ const BestProperties = () => {
                         )
                     })
                 }
-
             </div>
         </div>
     )
